@@ -30,6 +30,7 @@ export default function LoginPage({ onLogin }) {
   const [googleUserData, setGoogleUserData] = useState(null)
   const googleLogin = useGoogleLogin({
   onSuccess: async (tokenResponse) => {
+    if (!tokenResponse.access_token) { setError("Ошибка Google входа"); return }
     setLoading(true)
     try {
       const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
@@ -60,7 +61,7 @@ export default function LoginPage({ onLogin }) {
     finally { setLoading(false) }
   },
   onError: () => setError("Ошибка Google входа"),
-  flow: "auth-code"
+  flow: "implicit"
 })
   
   const setF = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError("") }
