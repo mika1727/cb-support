@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import { useApp } from "../App"
 
-const API = "http://localhost:3001/api"
+const API = "https://cb-support-d6jb.onrender.com/api"
 
 const STATUS_MAP = {
   open:        { label: "Открыт",   cls: "bg-blue-50 text-blue-600 border-blue-200",         Icon: AlertCircle  },
