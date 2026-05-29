@@ -16,7 +16,7 @@ const QUICK_PROMPTS = [
   { icon: Keyboard,    text: "Сбросить пароль",  msg: "Мне нужно сбросить пароль" },
 ]
 
-const API_BASE = "http://localhost:3001/api"
+const API_BASE = "https://cb-support-d6jb.onrender.com/api"
 const SESSIONS_KEY = "cb_sessions"
 
 function getSessions() {
