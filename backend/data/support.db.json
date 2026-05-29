@@ -1,0 +1,1088 @@
+{
+  "tickets": [
+    {
+      "id": 1,
+      "status": "open",
+      "user_id": "anonymous",
+      "title": "не работает впн ",
+      "description": "парамрмрвпмасм",
+      "category": "Сеть и VPN",
+      "priority": "medium",
+      "screenshot": null,
+      "created_at": "2026-05-13T05:52:36.968Z",
+      "updated_at": "2026-05-13T05:52:36.968Z"
+    },
+    {
+      "id": 2,
+      "status": "open",
+      "user_id": "anonymous",
+      "title": "аб ьтиариароиап",
+      "description": "лтвадолтлоатмгшавк",
+      "category": "Сеть и VPN",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T05:52:46.447Z",
+      "updated_at": "2026-05-13T05:52:46.447Z"
+    },
+    {
+      "id": 3,
+      "status": "open",
+      "user_id": 1,
+      "user_name": "Mika Haruno",
+      "title": "анаеасне",
+      "description": "дрлорлол",
+      "category": "Сеть и VPN",
+      "priority": "medium",
+      "screenshot": null,
+      "created_at": "2026-05-13T06:13:11.316Z",
+      "updated_at": "2026-05-13T06:13:11.316Z"
+    },
+    {
+      "id": 4,
+      "status": "resolved",
+      "user_id": 1,
+      "user_name": "Mika Haruno",
+      "title": "тоооооо",
+      "description": "ттттттттт",
+      "category": "Сеть и VPN",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T06:13:26.109Z",
+      "updated_at": "2026-05-26T04:47:46.891Z",
+      "resolution": "Решено оператором"
+    },
+    {
+      "id": 5,
+      "status": "resolved",
+      "user_id": 1,
+      "user_name": "Mika Haruno",
+      "title": "ппппппп",
+      "description": "оооооооо",
+      "category": "Windows / ПК",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T06:18:02.805Z",
+      "updated_at": "2026-05-16T15:11:45.675Z"
+    },
+    {
+      "id": 6,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika",
+      "title": "мпмпмпмп",
+      "description": "мпмпмпмп\n📞 Телефон: +444444444444\n📍 Местонахождение: 104",
+      "category": "Сеть и VPN",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T06:28:40.782Z",
+      "updated_at": "2026-05-16T15:11:25.503Z"
+    },
+    {
+      "id": 7,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika Haruno",
+      "title": "аааааа",
+      "description": "аааааа",
+      "category": "Windows / ПК",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T06:33:14.398Z",
+      "updated_at": "2026-05-16T15:11:19.862Z"
+    },
+    {
+      "id": 8,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika ",
+      "title": "помоги",
+      "description": "помоги",
+      "category": "Windows / ПК",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T09:11:27.926Z",
+      "updated_at": "2026-05-16T15:11:39.410Z"
+    },
+    {
+      "id": 9,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika Haruno",
+      "title": "fhfhfhfh",
+      "description": "fhfhfhfh",
+      "category": "Windows / ПК",
+      "priority": "high",
+      "screenshot": null,
+      "created_at": "2026-05-13T09:59:42.003Z",
+      "updated_at": "2026-05-13T10:19:57.967Z",
+      "operator_id": 4,
+      "resolution": "Решено оператором"
+    },
+    {
+      "id": 10,
+      "status": "open",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika",
+      "title": "что то с кодом ",
+      "description": "что то с кодом \n📍 Местонахождение: 115",
+      "category": "Прочее",
+      "priority": "high",
+      "screenshot": null,
+      "operator_id": 4,
+      "created_at": "2026-05-16T14:47:09.694Z",
+      "updated_at": "2026-05-16T14:47:09.694Z"
+    },
+    {
+      "id": 11,
+      "status": "open",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mi",
+      "title": "ррррр",
+      "description": "ррррр\n📍 Местонахождение: 112",
+      "category": "Сеть и VPN",
+      "priority": "high",
+      "screenshot": null,
+      "operator_id": 4,
+      "created_at": "2026-05-16T14:48:35.597Z",
+      "updated_at": "2026-05-16T14:51:07.654Z"
+    },
+    {
+      "id": 12,
+      "status": "open",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika",
+      "title": "вввввв",
+      "description": "оаоаооаоаооаоа\n📍 Местонахождение: 115",
+      "category": "Программы",
+      "priority": "high",
+      "screenshot": null,
+      "operator_id": 1,
+      "created_at": "2026-05-16T15:40:15.472Z",
+      "updated_at": "2026-05-16T15:40:15.472Z"
+    },
+    {
+      "id": 13,
+      "status": "open",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika Haruno",
+      "title": "ввввв",
+      "description": "ввввв",
+      "category": "Сеть и VPN",
+      "priority": "medium",
+      "screenshot": null,
+      "operator_id": 4,
+      "created_at": "2026-05-16T15:40:46.836Z",
+      "updated_at": "2026-05-16T15:40:46.836Z"
+    },
+    {
+      "id": 14,
+      "status": "open",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika Haruno",
+      "title": "ппппп",
+      "description": "ппппп",
+      "category": "Прочее",
+      "priority": "medium",
+      "screenshot": null,
+      "operator_id": 4,
+      "created_at": "2026-05-16T15:58:58.931Z",
+      "updated_at": "2026-05-16T15:58:58.931Z"
+    },
+    {
+      "id": 15,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mika ",
+      "title": "ааааа",
+      "description": "ааааа\n📍 Местонахождение: 100",
+      "category": "Windows / ПК",
+      "priority": "high",
+      "screenshot": null,
+      "operator_id": null,
+      "created_at": "2026-05-23T14:59:53.728Z",
+      "updated_at": "2026-05-26T04:47:39.649Z"
+    },
+    {
+      "id": 16,
+      "status": "resolved",
+      "user_id": "mikaharuno844@gmail.com",
+      "user_name": "Mikа ",
+      "title": "забыла пароль не могу сделать новый",
+      "description": "забыла пароль не могу сделать новый \n📞 Телефон: +78454848\n📍 Местонахождение: 115",
+      "category": "Доступы",
+      "priority": "high",
+      "screenshot": null,
+      "operator_id": 4,
+      "created_at": "2026-05-25T05:22:13.645Z",
+      "updated_at": "2026-05-25T05:24:09.613Z",
+      "resolution": "Решено специалистом"
+    }
+  ],
+  "conversations": [
+    {
+      "id": 1,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Не подключается корпоративный VPN",
+      "created_at": "2026-05-15T09:22:48.230Z"
+    },
+    {
+      "id": 2,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Подскажите, пожалуйста, что происходит при попытке подключения:",
+      "created_at": "2026-05-15T09:22:48.232Z"
+    },
+    {
+      "id": 3,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "VPN не подключается и выдает ошибку.",
+      "created_at": "2026-05-15T09:22:56.832Z"
+    },
+    {
+      "id": 4,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Спасибо за уточнение.\nОшибка, которая возникает при попытке подключения, имеет какой-то код или сообщение?\nЕсли да, то как оно выглядит?",
+      "created_at": "2026-05-15T09:22:56.832Z"
+    },
+    {
+      "id": 5,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Нет, просто пишет \"не удалось подключиться\".",
+      "created_at": "2026-05-15T09:23:19.846Z"
+    },
+    {
+      "id": 6,
+      "session_id": "s_1778836957421",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "В таком случае, попробуйте выполнить следующие действия:\n\n1. Проверьте, правильно ли введены данные для подключения к VPN (логин, пароль, сервер). Убедитесь, что вы используете актуальную информацию.\n\n2. Проверьте настройки сети на вашем устройстве. Убедитесь, что вы подключены к интернету и что другие приложения могут нормально работать в сети.\n\n3. Попробуйте перезагрузить устройство и повторить попытку подключения. Иногда это помогает решить временные проблемы с сетью.\n\n4. Если проблема сохраняется, попробуйте связаться с администратором сети или IT-отделом, чтобы они проверили настройки VPN-сервера и убедились, что все параметры правильные.\n\n5. Если все вышеперечисленное не помогает, возможно, проблема связана с самим VPN-сервером. В этом случае необходимо обратиться к специалистам, которые смогут диагностировать и решить проблему на серверной стороне.\n\nЕсли вы пройдете эти шаги и проблема не будет решена, сообщите мне, пожалуйста.",
+      "created_at": "2026-05-15T09:23:19.846Z"
+    },
+    {
+      "id": 7,
+      "session_id": "s_1779081147834",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Не запускается Excel, ошибка 0x800706BA",
+      "created_at": "2026-05-18T05:12:49.546Z"
+    },
+    {
+      "id": 8,
+      "session_id": "s_1779081147834",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Что из перечисленного ниже вы уже пробовали:",
+      "created_at": "2026-05-18T05:12:49.549Z"
+    },
+    {
+      "id": 9,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Не запускается Excel, ошибка 0x800706BA",
+      "created_at": "2026-05-25T04:45:23.581Z"
+    },
+    {
+      "id": 10,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Что вы делали перед тем, как возникла эта ошибка?",
+      "created_at": "2026-05-25T04:45:23.582Z"
+    },
+    {
+      "id": 11,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "[изображение]",
+      "created_at": "2026-05-25T04:47:25.446Z"
+    },
+    {
+      "id": 12,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:47:25.453Z"
+    },
+    {
+      "id": 13,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "помоги как к-этим пользоватьмся",
+      "created_at": "2026-05-25T04:49:47.610Z"
+    },
+    {
+      "id": 14,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:49:47.612Z"
+    },
+    {
+      "id": 15,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "почему не работал",
+      "created_at": "2026-05-25T04:52:25.641Z"
+    },
+    {
+      "id": 16,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:52:25.646Z"
+    },
+    {
+      "id": 17,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "не работает",
+      "created_at": "2026-05-25T04:53:50.852Z"
+    },
+    {
+      "id": 18,
+      "session_id": "s_1779684306427",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:53:50.853Z"
+    },
+    {
+      "id": 19,
+      "session_id": "s_1779685003280",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "не понимаю почему не работает",
+      "created_at": "2026-05-25T04:57:08.454Z"
+    },
+    {
+      "id": 20,
+      "session_id": "s_1779685003280",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:57:08.457Z"
+    },
+    {
+      "id": 21,
+      "session_id": "s_1779685003280",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "что тут не так",
+      "created_at": "2026-05-25T04:58:26.582Z"
+    },
+    {
+      "id": 22,
+      "session_id": "s_1779685003280",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T04:58:26.583Z"
+    },
+    {
+      "id": 23,
+      "session_id": "s_1779685185991",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "почему не работает",
+      "created_at": "2026-05-25T05:00:03.932Z"
+    },
+    {
+      "id": 24,
+      "session_id": "s_1779685185991",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T05:00:03.934Z"
+    },
+    {
+      "id": 25,
+      "session_id": "s_1779685185991",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "что за ошибка",
+      "created_at": "2026-05-25T05:01:28.915Z"
+    },
+    {
+      "id": 26,
+      "session_id": "s_1779685185991",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "⚠️ Не удалось проанализировать изображение. Gemini недоступен — попробуйте завтра или опишите проблему текстом.",
+      "created_at": "2026-05-25T05:01:28.917Z"
+    },
+    {
+      "id": 27,
+      "session_id": "s_1779685440160",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "не работает",
+      "created_at": "2026-05-25T05:04:25.027Z"
+    },
+    {
+      "id": 28,
+      "session_id": "s_1779685440160",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Здравствуйте! Чтобы я мог вам помочь, пожалуйста, уточните, что именно у вас не работает в приложении BlueStacks?",
+      "created_at": "2026-05-25T05:04:25.029Z"
+    },
+    {
+      "id": 29,
+      "session_id": "s_1779685440160",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Не запускается Excel, ошибка 0x800706BA",
+      "created_at": "2026-05-25T05:07:35.002Z"
+    },
+    {
+      "id": 30,
+      "session_id": "s_1779685440160",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Что из перечисленного ниже произошло с вашим компьютером?",
+      "created_at": "2026-05-25T05:07:35.003Z"
+    },
+    {
+      "id": 31,
+      "session_id": "s_1779769929566",
+      "user_id": "anonymous",
+      "role": "user",
+      "content": "Не запускается Excel, ошибка 0x800706BA",
+      "created_at": "2026-05-26T04:32:14.586Z"
+    },
+    {
+      "id": 32,
+      "session_id": "s_1779769929566",
+      "user_id": "anonymous",
+      "role": "assistant",
+      "content": "Привет! Понял вашу проблему с Excel и ошибкой 0x800706BA. Давайте разберемся.\nДругие программы Microsoft Office (Word, PowerPoint) запускаются?",
+      "created_at": "2026-05-26T04:32:14.587Z"
+    }
+  ],
+  "knowledge_base": [
+    {
+      "id": 1,
+      "category": "vpn",
+      "hits": 0,
+      "keywords": [
+        "vpn",
+        "cisco",
+        "сеть",
+        "подключение",
+        "1194"
+      ],
+      "question": "VPN не подключается",
+      "answer": "1. Проверьте что токен активен в личном кабинете.\n2. Убедитесь что брандмауэр не блокирует порт 1194 (UDP).\n3. Перезапустите клиент Cisco AnyConnect.\n4. Если проблема сохраняется — обратитесь к сетевому администратору."
+    },
+    {
+      "id": 2,
+      "category": "excel",
+      "hits": 0,
+      "keywords": [
+        "excel",
+        "0x800706ba",
+        "office",
+        "лицензия"
+      ],
+      "question": "Excel не запускается, ошибка 0x800706BA",
+      "answer": "Ошибка 0x800706BA — сбой подключения к серверу лицензий.\n1. Запустите Excel от имени администратора.\n2. Проверьте доступность корпоративного VPN.\n3. Параметры → Учётные записи → Управление → Активировать Office."
+    },
+    {
+      "id": 3,
+      "category": "password",
+      "hits": 0,
+      "keywords": [
+        "пароль",
+        "password",
+        "сброс",
+        "reset",
+        "логин"
+      ],
+      "question": "Сбросить пароль",
+      "answer": "Для сброса пароля:\n1. Перейдите на https://password.company.local\n2. Введите корпоративный e-mail.\n3. Следуйте инструкции из письма.\nЕсли e-mail не пришёл — свяжитесь с HR-отделом."
+    },
+    {
+      "id": 4,
+      "category": "hardware",
+      "hits": 0,
+      "keywords": [
+        "монитор",
+        "экран",
+        "display",
+        "hdmi"
+      ],
+      "question": "Монитор не включается",
+      "answer": "1. Проверьте кабель питания и кабель видеосигнала.\n2. Нажмите кнопку питания на самом мониторе.\n3. Попробуйте другой порт видеокарты.\n4. Создайте заявку на замену оборудования."
+    },
+    {
+      "id": 5,
+      "category": "general",
+      "hits": 0,
+      "keywords": [
+        "тикет",
+        "заявка",
+        "поддержка",
+        "support"
+      ],
+      "question": "Как создать тикет в IT-поддержку",
+      "answer": "Просто опишите проблему, и ИИ-ассистент поможет решить её или создаст тикет для передачи инженеру."
+    }
+  ],
+  "metrics": [
+    {
+      "id": 1,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-13T05:52:36.969Z"
+    },
+    {
+      "id": 2,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-13T05:52:46.447Z"
+    },
+    {
+      "id": 3,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-13T06:13:11.319Z"
+    },
+    {
+      "id": 4,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-13T06:13:26.110Z"
+    },
+    {
+      "id": 5,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Windows / ПК",
+      "rating": null,
+      "created_at": "2026-05-13T06:18:02.806Z"
+    },
+    {
+      "id": 6,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-13T06:28:40.783Z"
+    },
+    {
+      "id": 7,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Windows / ПК",
+      "rating": null,
+      "created_at": "2026-05-13T06:33:14.399Z"
+    },
+    {
+      "id": 8,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-13T06:45:52.385Z"
+    },
+    {
+      "id": 9,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Windows / ПК",
+      "rating": null,
+      "created_at": "2026-05-13T09:11:27.927Z"
+    },
+    {
+      "id": 10,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Windows / ПК",
+      "rating": null,
+      "created_at": "2026-05-13T09:59:42.005Z"
+    },
+    {
+      "id": 11,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-13T10:00:54.988Z"
+    },
+    {
+      "id": 12,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-13T10:00:58.673Z"
+    },
+    {
+      "id": 13,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-13T10:19:57.968Z"
+    },
+    {
+      "id": 14,
+      "event": "message_sent",
+      "session_id": "s_1778836957421",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-15T09:22:48.232Z"
+    },
+    {
+      "id": 15,
+      "event": "message_sent",
+      "session_id": "s_1778836957421",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-15T09:22:56.833Z"
+    },
+    {
+      "id": 16,
+      "event": "message_sent",
+      "session_id": "s_1778836957421",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-15T09:23:19.846Z"
+    },
+    {
+      "id": 17,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Прочее",
+      "rating": null,
+      "created_at": "2026-05-16T14:47:09.696Z"
+    },
+    {
+      "id": 18,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-16T14:48:35.598Z"
+    },
+    {
+      "id": 19,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T14:51:04.544Z"
+    },
+    {
+      "id": 20,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T15:11:19.863Z"
+    },
+    {
+      "id": 21,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T15:11:25.504Z"
+    },
+    {
+      "id": 22,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T15:11:33.874Z"
+    },
+    {
+      "id": 23,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T15:11:39.410Z"
+    },
+    {
+      "id": 24,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-16T15:11:45.676Z"
+    },
+    {
+      "id": 25,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Программы",
+      "rating": null,
+      "created_at": "2026-05-16T15:40:15.473Z"
+    },
+    {
+      "id": 26,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Сеть и VPN",
+      "rating": null,
+      "created_at": "2026-05-16T15:40:46.839Z"
+    },
+    {
+      "id": 27,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Прочее",
+      "rating": null,
+      "created_at": "2026-05-16T15:58:58.932Z"
+    },
+    {
+      "id": 28,
+      "event": "message_sent",
+      "session_id": "s_1779081147834",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-18T05:12:49.549Z"
+    },
+    {
+      "id": 29,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Windows / ПК",
+      "rating": null,
+      "created_at": "2026-05-23T14:59:53.730Z"
+    },
+    {
+      "id": 30,
+      "event": "message_sent",
+      "session_id": "s_1779684306427",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:45:23.583Z"
+    },
+    {
+      "id": 31,
+      "event": "message_sent",
+      "session_id": "s_1779684306427",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:47:25.455Z"
+    },
+    {
+      "id": 32,
+      "event": "message_sent",
+      "session_id": "s_1779684306427",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:49:47.613Z"
+    },
+    {
+      "id": 33,
+      "event": "message_sent",
+      "session_id": "s_1779684306427",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:52:25.648Z"
+    },
+    {
+      "id": 34,
+      "event": "message_sent",
+      "session_id": "s_1779684306427",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:53:50.853Z"
+    },
+    {
+      "id": 35,
+      "event": "message_sent",
+      "session_id": "s_1779685003280",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:57:08.458Z"
+    },
+    {
+      "id": 36,
+      "event": "message_sent",
+      "session_id": "s_1779685003280",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T04:58:26.584Z"
+    },
+    {
+      "id": 37,
+      "event": "message_sent",
+      "session_id": "s_1779685185991",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:00:03.935Z"
+    },
+    {
+      "id": 38,
+      "event": "message_sent",
+      "session_id": "s_1779685185991",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:01:28.918Z"
+    },
+    {
+      "id": 39,
+      "event": "message_sent",
+      "session_id": "s_1779685440160",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:04:25.030Z"
+    },
+    {
+      "id": 40,
+      "event": "message_sent",
+      "session_id": "s_1779685440160",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:07:35.004Z"
+    },
+    {
+      "id": 41,
+      "event": "ticket_created",
+      "session_id": null,
+      "category": "Доступы",
+      "rating": null,
+      "created_at": "2026-05-25T05:22:13.645Z"
+    },
+    {
+      "id": 42,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:24:04.683Z"
+    },
+    {
+      "id": 43,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-25T05:24:09.614Z"
+    },
+    {
+      "id": 44,
+      "event": "message_sent",
+      "session_id": "s_1779769929566",
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-26T04:32:14.588Z"
+    },
+    {
+      "id": 45,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-26T04:47:39.651Z"
+    },
+    {
+      "id": 46,
+      "event": "ticket_resolved",
+      "session_id": null,
+      "category": null,
+      "rating": null,
+      "created_at": "2026-05-26T04:47:46.892Z"
+    }
+  ],
+  "operators": [
+    {
+      "id": 4,
+      "name": "mika",
+      "role": "IT",
+      "email": "mikaharuno844@gmail.com",
+      "tags": [],
+      "online": true,
+      "created_at": "2026-05-13T09:58:03.690Z"
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Mika Haruno",
+      "email": "mikaharuno844@gmail.com",
+      "password": null,
+      "role": "user",
+      "provider": "google",
+      "googleId": "114993877519761911893",
+      "avatar": "https://lh3.googleusercontent.com/a/ACg8ocIylrMhMkIjF4WluJfdZ2TtVc0sv_l-cgc_FC7jfOTJLMCF5Q=s96-c",
+      "created_at": "2026-05-12T19:10:09.136Z",
+      "operator_code": "7cf07107e91604e18d3eb6bb1c053319bc493c6099ffe02a964b063a259ba9cd"
+    }
+  ],
+  "tokens": [
+    {
+      "userId": 1,
+      "token": "513195384f939ecd7ec898aa0530c9531ee004e7c71abd0ab55e93ec2983bf93",
+      "created_at": "2026-05-26T04:40:23.100Z"
+    }
+  ],
+  "messages": [
+    {
+      "id": 1,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "sjs",
+      "created_at": "2026-05-16T16:11:06.044Z"
+    },
+    {
+      "id": 2,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "sksks",
+      "created_at": "2026-05-16T16:11:07.917Z"
+    },
+    {
+      "id": 3,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "ssk",
+      "created_at": "2026-05-16T16:11:08.944Z"
+    },
+    {
+      "id": 4,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "алдалалда",
+      "created_at": "2026-05-16T16:24:12.576Z"
+    },
+    {
+      "id": 5,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "алвлдлдав",
+      "created_at": "2026-05-16T16:24:19.863Z"
+    },
+    {
+      "id": 6,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "алдлаш\\аа",
+      "created_at": "2026-05-16T16:24:22.477Z"
+    },
+    {
+      "id": 7,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "аооао",
+      "created_at": "2026-05-16T16:24:23.745Z"
+    },
+    {
+      "id": 8,
+      "ticket_id": 14,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "аоаа",
+      "created_at": "2026-05-16T16:24:24.892Z"
+    },
+    {
+      "id": 9,
+      "ticket_id": 10,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "вы можете написать что именно не так ?",
+      "created_at": "2026-05-18T05:13:53.573Z"
+    },
+    {
+      "id": 10,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "очень срочно",
+      "created_at": "2026-05-25T05:22:38.298Z"
+    },
+    {
+      "id": 11,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "все сделано",
+      "created_at": "2026-05-25T05:24:20.077Z"
+    },
+    {
+      "id": 12,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "все спасибо",
+      "created_at": "2026-05-25T05:34:06.664Z"
+    },
+    {
+      "id": 13,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "все работает",
+      "created_at": "2026-05-25T05:34:29.906Z"
+    },
+    {
+      "id": 14,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "user",
+      "text": "аоалаоао",
+      "created_at": "2026-05-25T05:34:36.883Z"
+    },
+    {
+      "id": 15,
+      "ticket_id": 16,
+      "sender_id": "mikaharuno844@gmail.com",
+      "sender_name": "Mika Haruno",
+      "sender_role": "operator",
+      "text": "нррр\\",
+      "created_at": "2026-05-26T04:47:56.905Z"
+    }
+  ],
+  "password_resets": []
+}
