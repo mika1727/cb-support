@@ -21,7 +21,7 @@ const PORT = process.env.PORT || 3001;
 const isProd = process.env.NODE_ENV === "production";
 
 // ─── Middleware ────────────────────────────────────────────────────────────────
-app.use(helmet({ contentSecurityPolicy: isProd ? undefined : false }));
+app.use(helmet({   contentSecurityPolicy: {     directives: {       defaultSrc: ["'self'"],       scriptSrc: ["'self'", "https://accounts.google.com", "https://*.googleusercontent.com"],       frameSrc: ["'self'", "https://accounts.google.com"],       connectSrc: ["'self'", "https://accounts.google.com"],       imgSrc: ["'self'", "data:", "https://*.googleusercontent.com"],     }   } }));
 app.use(cors({ origin: process.env.FRONTEND_URL || "*" }));
 app.use(express.json({ limit: "10mb" }));
 app.use(morgan("dev"));
