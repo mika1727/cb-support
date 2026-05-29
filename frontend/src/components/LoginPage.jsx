@@ -5,7 +5,7 @@ import { GoogleLogin } from "@react-oauth/google"
 import { Sparkles, Shield, User, Eye, EyeOff, Mail, Lock, ArrowLeft, KeyRound } from "lucide-react"
 import { useApp } from "../App"
 
-const API = https://cb-support-d6jb.onrender.com/api
+const API ="https://cb-support-d6jb.onrender.com/api"
 
 export default function LoginPage({ onLogin }) {
   const { darkMode } = useApp()
