@@ -60,7 +60,7 @@ export default function LoginPage({ onLogin }) {
     finally { setLoading(false) }
   },
   onError: () => setError("Ошибка Google входа"),
-  flow: "implicit"
+  flow: "auth-code"
 })
   
   const setF = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError("") }
