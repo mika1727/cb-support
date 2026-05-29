@@ -1,5 +1,8 @@
 ﻿const router = require("express").Router();
+const Groq = require("groq-sdk");
 const { getDB } = require("../db/database");
+
+const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
 const SYSTEM = `Ты — опытный IT-специалист технической поддержки. Веди диалог как настоящий специалист:
 
@@ -94,21 +97,17 @@ router.post("/", async (req, res) => {
         reply = rateLimitMsg || "⚠️ Не удалось проанализировать изображение. Попробуйте описать проблему текстом."
       }
     } else {
-      // Текстовый диалог через Gemini
-      try {
-        const historyText = history
-          .map(h => `${h.role === "user" ? "Пользователь" : "Ассистент"}: ${h.content}`)
-          .join("\n")
-        const fullPrompt = `${SYSTEM}${kbContext ? `\n\nБаза знаний:\n${kbContext}` : ""}${historyText ? `\n\n${historyText}` : ""}\n\nПользователь: ${message}\n\nАссистент:`
-        reply = await askGemini(fullPrompt)
-      } catch (geminiErr) {
-        console.error("[gemini text]", geminiErr.message)
-        const rateLimitMsg = parseRetryMessage(geminiErr.message)
-        if (rateLimitMsg) {
-          return res.json({ reply: rateLimitMsg, options: [], sessionId, suggestEscalate: false })
-        }
-        throw geminiErr
-      }
+     // Текстовый диалог через Groq
+      const msg = await groq.chat.completions.create({
+        model: "llama-3.3-70b-versatile",
+        messages: [
+          { role: "system", content: SYSTEM + (kbContext ? `\n\nБаза знаний:\n${kbContext}` : "") },
+          ...history,
+          { role: "user", content: message },
+        ],
+        max_tokens: 1024,
+      });
+      reply = msg.choices[0].message.content;
     }
 
     // Парсим варианты ответа
