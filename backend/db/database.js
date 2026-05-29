@@ -1,162 +1,153 @@
-﻿/**
- * db/database.js
- * Использует lowdb — JSON-файл, чистый JS, не требует компиляции.
- * Работает на Windows/Mac/Linux без Python и node-gyp.
- */
-const { Low } = require("lowdb")
-const { JSONFile } = require("lowdb/node")
-const path = require("path")
-const fs   = require("fs")
+const { MongoClient, ObjectId } = require("mongodb")
 
-const DB_PATH = process.env.DB_PATH || path.join(__dirname, "../data/support.db.json")
+const MONGODB_URI = process.env.MONGODB_URI
+const DB_NAME = "cbsupport"
 
+let _client
 let _db
-
-function nextId(table) {
-  const rows = _db.data[table]
-  if (!rows || rows.length === 0) return 1
-  return Math.max(...rows.map(r => r.id)) + 1
-}
 
 function now() { return new Date().toISOString() }
 
 const dbHelpers = {
-  // ── tickets ──────────────────────────────────────────────────────────────────
-  insertTicket(data) {
-    const row = { id: nextId("tickets"), status: "open", ...data, created_at: now(), updated_at: now() }
-    _db.data.tickets.push(row)
-    _db.write()
-    return row
+  async insertTicket(data) {
+    const row = { status: "open", ...data, created_at: now(), updated_at: now() }
+    const result = await _db.collection("tickets").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getTickets({ status, category, userId, limit = 50 } = {}) {
-    let rows = _db.data.tickets
-    if (status)   rows = rows.filter(r => r.status   === status)
-    if (category) rows = rows.filter(r => r.category === category)
-    if (userId)   rows = rows.filter(r => r.user_id  === userId)
-    return [...rows].reverse().slice(0, limit)
+  async getTickets({ status, category, userId, limit = 50 } = {}) {
+    const filter = {}
+    if (status) filter.status = status
+    if (category) filter.category = category
+    if (userId) filter.user_id = userId
+    const rows = await _db.collection("tickets").find(filter).sort({ created_at: -1 }).limit(limit).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  getAllTickets() {
-    return _db.data.tickets || []
+  async getAllTickets() {
+    const rows = await _db.collection("tickets").find({}).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  getTicketById(id) {
-    return _db.data.tickets.find(r => r.id === parseInt(id)) || null
+  async getTicketById(id) {
+    try {
+      const row = await _db.collection("tickets").findOne({ _id: new ObjectId(id) })
+      return row ? { ...row, id: row._id.toString() } : null
+    } catch { return null }
   },
-  updateTicket(id, fields) {
-    const idx = _db.data.tickets.findIndex(r => r.id === parseInt(id))
-    if (idx === -1) return false
-    _db.data.tickets[idx] = { ..._db.data.tickets[idx], ...fields, updated_at: now() }
-    _db.write()
-    return true
+  async updateTicket(id, fields) {
+    try {
+      const result = await _db.collection("tickets").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { ...fields, updated_at: now() } }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
-
-  // ── operators ─────────────────────────────────────────────────────────────────
-  insertOperator(data) {
-    const row = { id: nextId("operators"), ...data, created_at: now() }
-    _db.data.operators.push(row)
-    _db.write()
-    return row
+  async insertOperator(data) {
+    const row = { ...data, created_at: now() }
+    const result = await _db.collection("operators").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getOperators() { return _db.data.operators || [] },
-  updateOperator(id, fields) {
-    const idx = _db.data.operators.findIndex(r => r.id === parseInt(id))
-    if (idx === -1) return false
-    _db.data.operators[idx] = { ..._db.data.operators[idx], ...fields }
-    _db.write()
-    return true
+  async getOperators() {
+    const rows = await _db.collection("operators").find({}).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  deleteOperator(id) {
-    const idx = _db.data.operators.findIndex(r => r.id === parseInt(id))
-    if (idx === -1) return false
-    _db.data.operators.splice(idx, 1)
-    _db.write()
-    return true
+  async updateOperator(id, fields) {
+    try {
+      const result = await _db.collection("operators").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: fields }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
-
-  // ── users ─────────────────────────────────────────────────────────────────────
-  insertUser(data) {
-    const row = { id: nextId("users"), ...data, created_at: now() }
-    _db.data.users.push(row)
-    _db.write()
-    return row
+  async deleteOperator(id) {
+    try {
+      const result = await _db.collection("operators").deleteOne({ _id: new ObjectId(id) })
+      return result.deletedCount > 0
+    } catch { return false }
   },
-  getUserByEmail(email) {
-    return _db.data.users.find(r => r.email === email) || null
+  async insertUser(data) {
+    const row = { ...data, created_at: now() }
+    const result = await _db.collection("users").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getUserByToken(token) {
-    const t = _db.data.tokens.find(r => r.token === token)
+  async getUserByEmail(email) {
+    const row = await _db.collection("users").findOne({ email })
+    return row ? { ...row, id: row._id.toString() } : null
+  },
+  async getUserByToken(token) {
+    const t = await _db.collection("tokens").findOne({ token })
     if (!t) return null
-    return _db.data.users.find(r => r.id === t.userId) || null
+    try {
+      const row = await _db.collection("users").findOne({ _id: new ObjectId(t.userId) })
+      return row ? { ...row, id: row._id.toString() } : null
+    } catch { return null }
   },
-  getAllUsers() {
-    return _db.data.users || []
+  async getAllUsers() {
+    const rows = await _db.collection("users").find({}).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  updateUserPassword(userId, hashedPassword) {
-    const idx = _db.data.users.findIndex(u => u.id === parseInt(userId) || u.id === userId)
-    if (idx === -1) return false
-    _db.data.users[idx].password = hashedPassword
-    _db.write()
-    return true
+  async updateUserPassword(userId, hashedPassword) {
+    try {
+      const result = await _db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { password: hashedPassword } }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
-  // Новый метод: обновить provider пользователя
-  updateUserProvider(userId, provider) {
-    const idx = _db.data.users.findIndex(u => u.id === parseInt(userId) || u.id === userId)
-    if (idx === -1) return false
-    _db.data.users[idx].provider = provider
-    _db.write()
-    return true
+  async updateUserProvider(userId, provider) {
+    try {
+      const result = await _db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { provider } }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
-  updateOperatorCode(userId, hashedCode) {
-    const idx = _db.data.users.findIndex(u => u.id === parseInt(userId) || u.id === userId)
-    if (idx === -1) return false
-    _db.data.users[idx].operator_code = hashedCode
-    _db.write()
-    return true
+  async updateOperatorCode(userId, hashedCode) {
+    try {
+      const result = await _db.collection("users").updateOne(
+        { _id: new ObjectId(userId) },
+        { $set: { operator_code: hashedCode } }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
-
-  // ── tokens ────────────────────────────────────────────────────────────────────
-  saveToken(userId, token) {
-    // Удаляем старые токены пользователя
-    _db.data.tokens = _db.data.tokens.filter(r => r.userId !== userId)
-    _db.data.tokens.push({ userId, token, created_at: now() })
-    _db.write()
+  async saveToken(userId, token) {
+    await _db.collection("tokens").deleteMany({ userId })
+    await _db.collection("tokens").insertOne({ userId, token, created_at: now() })
   },
-  deleteToken(token) {
-    _db.data.tokens = _db.data.tokens.filter(r => r.token !== token)
-    _db.write()
+  async deleteToken(token) {
+    await _db.collection("tokens").deleteOne({ token })
   },
-
-  // ── conversations ─────────────────────────────────────────────────────────────
-  insertConversation(data) {
-    const row = { id: nextId("conversations"), ...data, created_at: now() }
-    _db.data.conversations.push(row)
-    _db.write()
-    return row
+  async insertConversation(data) {
+    const row = { ...data, created_at: now() }
+    const result = await _db.collection("conversations").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getConversations(sessionId, limit = 30) {
-    return _db.data.conversations.filter(r => r.session_id === sessionId).slice(-limit)
+  async getConversations(sessionId, limit = 30) {
+    const rows = await _db.collection("conversations").find({ session_id: sessionId }).limit(limit).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  linkConversationsToTicket(sessionId, ticketId) {
-    _db.data.conversations
-      .filter(r => r.session_id === sessionId && !r.ticket_id)
-      .forEach(r => { r.ticket_id = ticketId })
-    _db.write()
+  async linkConversationsToTicket(sessionId, ticketId) {
+    await _db.collection("conversations").updateMany(
+      { session_id: sessionId, ticket_id: { $exists: false } },
+      { $set: { ticket_id: ticketId } }
+    )
   },
-
-  // ── messages ──────────────────────────────────────────────────────────────────
-  insertMessage(data) {
-    const row = { id: nextId("messages"), ...data, created_at: now() }
-    _db.data.messages.push(row)
-    _db.write()
-    return row
+  async insertMessage(data) {
+    const row = { ...data, created_at: now() }
+    const result = await _db.collection("messages").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getMessages(ticketId) {
-    return _db.data.messages.filter(r => r.ticket_id === parseInt(ticketId))
+  async getMessages(ticketId) {
+    const rows = await _db.collection("messages").find({ ticket_id: ticketId.toString() }).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-
-  // ── knowledge_base ────────────────────────────────────────────────────────────
-  searchKB(q, category, limit = 5) {
+  async searchKB(q, category, limit = 5) {
     const ql = q.toLowerCase()
-    let rows = _db.data.knowledge_base.filter(r => {
+    const rows = await _db.collection("knowledge_base").find({}).toArray()
+    let filtered = rows.filter(r => {
       const kw = Array.isArray(r.keywords) ? r.keywords : []
       return (
         r.question.toLowerCase().includes(ql) ||
@@ -164,132 +155,93 @@ const dbHelpers = {
         kw.some(k => k.includes(ql) || ql.includes(k))
       )
     })
-    if (category) rows = rows.filter(r => r.category === category)
-    return rows.map(r => {
+    if (category) filtered = filtered.filter(r => r.category === category)
+    return filtered.map(r => {
       const kw = Array.isArray(r.keywords) ? r.keywords : []
       let score = 0
       if (r.question.toLowerCase().includes(ql)) score += 3
-      if (r.answer.toLowerCase().includes(ql))   score += 1
+      if (r.answer.toLowerCase().includes(ql)) score += 1
       if (kw.some(k => k.includes(ql) || ql.includes(k))) score += 2
-      return { ...r, score }
+      return { ...r, id: r._id.toString(), score }
     }).sort((a, b) => b.score - a.score).slice(0, limit)
   },
-  incrementKBHits(ids) {
-    ids.forEach(id => {
-      const r = _db.data.knowledge_base.find(r => r.id === id)
-      if (r) r.hits = (r.hits || 0) + 1
-    })
-    _db.write()
+  async incrementKBHits(ids) {
+    for (const id of ids) {
+      try {
+        await _db.collection("knowledge_base").updateOne(
+          { _id: new ObjectId(id) },
+          { $inc: { hits: 1 } }
+        )
+      } catch {}
+    }
   },
-
-  // ── metrics ───────────────────────────────────────────────────────────────────
-  logMetric(event, sessionId = null, category = null, rating = null) {
-    _db.data.metrics.push({ id: nextId("metrics"), event, session_id: sessionId, category, rating, created_at: now() })
-    _db.write()
+  async logMetric(event, sessionId = null, category = null, rating = null) {
+    await _db.collection("metrics").insertOne({ event, session_id: sessionId, category, rating, created_at: now() })
   },
-  getAnalytics(from, to) {
-    const tickets = _db.data.tickets.filter(r => r.created_at >= from && r.created_at <= to)
-    const metrics = _db.data.metrics.filter(r => r.created_at >= from && r.created_at <= to)
-
+  async getAnalytics(from, to) {
+    const tickets = await _db.collection("tickets").find({ created_at: { $gte: from, $lte: to } }).toArray()
+    const metrics = await _db.collection("metrics").find({ created_at: { $gte: from, $lte: to } }).toArray()
     const byStatus = {}, byCategory = {}
     tickets.forEach(t => {
-      byStatus[t.status]     = (byStatus[t.status]     || 0) + 1
+      byStatus[t.status] = (byStatus[t.status] || 0) + 1
       byCategory[t.category] = (byCategory[t.category] || 0) + 1
     })
-
-    const ratings   = metrics.filter(m => m.event === "answer_rated" && m.rating != null)
-    const avgRating = ratings.length
-      ? (ratings.reduce((s, m) => s + m.rating, 0) / ratings.length).toFixed(2)
-      : null
-
-    const topKB = [..._db.data.knowledge_base].sort((a, b) => (b.hits || 0) - (a.hits || 0)).slice(0, 5)
-
+    const ratings = metrics.filter(m => m.event === "answer_rated" && m.rating != null)
+    const avgRating = ratings.length ? (ratings.reduce((s, m) => s + m.rating, 0) / ratings.length).toFixed(2) : null
+    const topKB = await _db.collection("knowledge_base").find({}).sort({ hits: -1 }).limit(5).toArray()
     return {
       tickets: {
-        byStatus:    Object.entries(byStatus).map(([status, count]) => ({ status, count })),
-        byCategory:  Object.entries(byCategory).map(([category, count]) => ({ category, count })),
+        byStatus: Object.entries(byStatus).map(([status, count]) => ({ status, count })),
+        byCategory: Object.entries(byCategory).map(([category, count]) => ({ category, count })),
         escalations: tickets.length,
       },
-      messages:        { total: metrics.filter(m => m.event === "message_sent").length },
-      rating:          { avg: avgRating, total: ratings.length },
+      messages: { total: metrics.filter(m => m.event === "message_sent").length },
+      rating: { avg: avgRating, total: ratings.length },
       topKnowledgeBase: topKB,
     }
   },
-
-  // ── password_resets ───────────────────────────────────────────────────────────
-  insertPasswordReset(data) {
-    if (!_db.data.password_resets) _db.data.password_resets = []
-    const existing = _db.data.password_resets.find(r => r.email === data.email && r.status === "pending")
-    if (existing) return existing
-    const row = { id: nextId("password_resets"), ...data, status: "pending", created_at: now() }
-    _db.data.password_resets.push(row)
-    _db.write()
-    return row
+  async insertPasswordReset(data) {
+    const existing = await _db.collection("password_resets").findOne({ email: data.email, status: "pending" })
+    if (existing) return { ...existing, id: existing._id.toString() }
+    const row = { ...data, status: "pending", created_at: now() }
+    const result = await _db.collection("password_resets").insertOne(row)
+    return { ...row, id: result.insertedId.toString() }
   },
-  getPasswordResets() {
-    return (_db.data.password_resets || []).filter(r => r.status === "pending")
+  async getPasswordResets() {
+    const rows = await _db.collection("password_resets").find({ status: "pending" }).toArray()
+    return rows.map(r => ({ ...r, id: r._id.toString() }))
   },
-  resolvePasswordReset(id) {
-    const idx = (_db.data.password_resets || []).findIndex(r => r.id === parseInt(id))
-    if (idx === -1) return false
-    _db.data.password_resets[idx].status = "resolved"
-    _db.write()
-    return true
+  async resolvePasswordReset(id) {
+    try {
+      const result = await _db.collection("password_resets").updateOne(
+        { _id: new ObjectId(id) },
+        { $set: { status: "resolved" } }
+      )
+      return result.modifiedCount > 0
+    } catch { return false }
   },
 }
 
 async function initDB() {
-  const dir = path.dirname(DB_PATH)
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true })
-
-  const adapter = new JSONFile(DB_PATH)
-  _db = new Low(adapter, {
-    tickets:         [],
-    conversations:   [],
-    knowledge_base:  [],
-    metrics:         [],
-    operators:       [],
-    users:           [],
-    tokens:          [],
-    messages:        [],
-    password_resets: [],
-  })
-  await _db.read()
-
-  // Автоматически добавляем недостающие таблицы
-  const tables = ["tickets", "conversations", "knowledge_base", "metrics", "operators", "users", "tokens", "messages", "password_resets"]
-  let needsWrite = false
-  for (const table of tables) {
-    if (!_db.data[table]) {
-      _db.data[table] = []
-      needsWrite = true
-    }
-  }
-  if (needsWrite) await _db.write()
-
-  if (_db.data.knowledge_base.length === 0) {
-    _db.data.knowledge_base = [
-      { id: 1, category: "vpn",      hits: 0, keywords: ["vpn", "cisco", "сеть", "подключение", "1194"],
+  _client = new MongoClient(MONGODB_URI)
+  await _client.connect()
+  _db = _client.db(DB_NAME)
+  const kbCount = await _db.collection("knowledge_base").countDocuments()
+  if (kbCount === 0) {
+    await _db.collection("knowledge_base").insertMany([
+      { category: "vpn", hits: 0, keywords: ["vpn", "cisco", "сеть", "подключение"],
         question: "VPN не подключается",
-        answer: "1. Проверьте что токен активен в личном кабинете.\n2. Убедитесь что брандмауэр не блокирует порт 1194 (UDP).\n3. Перезапустите клиент Cisco AnyConnect.\n4. Если проблема сохраняется — обратитесь к сетевому администратору." },
-      { id: 2, category: "excel",    hits: 0, keywords: ["excel", "0x800706ba", "office", "лицензия"],
-        question: "Excel не запускается, ошибка 0x800706BA",
-        answer: "Ошибка 0x800706BA — сбой подключения к серверу лицензий.\n1. Запустите Excel от имени администратора.\n2. Проверьте доступность корпоративного VPN.\n3. Параметры → Учётные записи → Управление → Активировать Office." },
-      { id: 3, category: "password", hits: 0, keywords: ["пароль", "password", "сброс", "reset", "логин"],
+        answer: "1. Проверьте токен.\n2. Порт 1194 UDP.\n3. Перезапустите Cisco AnyConnect." },
+      { category: "excel", hits: 0, keywords: ["excel", "0x800706ba", "office"],
+        question: "Excel не запускается",
+        answer: "1. Запустите от имени администратора.\n2. Проверьте VPN." },
+      { category: "password", hits: 0, keywords: ["пароль", "сброс"],
         question: "Сбросить пароль",
-        answer: "Для сброса пароля обратитесь к администратору через систему CB-Support." },
-      { id: 4, category: "hardware", hits: 0, keywords: ["монитор", "экран", "display", "hdmi"],
-        question: "Монитор не включается",
-        answer: "1. Проверьте кабель питания и кабель видеосигнала.\n2. Нажмите кнопку питания на самом мониторе.\n3. Попробуйте другой порт видеокарты.\n4. Создайте заявку на замену оборудования." },
-      { id: 5, category: "general",  hits: 0, keywords: ["тикет", "заявка", "поддержка", "support"],
-        question: "Как создать тикет в IT-поддержку",
-        answer: "Просто опишите проблему, и ИИ-ассистент поможет решить её или создаст тикет для передачи инженеру." },
-    ]
-    await _db.write()
+        answer: "Обратитесь к администратору через CB-Support." },
+    ])
     console.log("🌱  Knowledge base seeded")
   }
-
-  console.log("📦  JSON DB ready:", DB_PATH)
+  console.log("✅  MongoDB ready:", DB_NAME)
 }
 
 module.exports = { initDB, getDB: () => dbHelpers }
