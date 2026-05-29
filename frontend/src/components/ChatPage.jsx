@@ -213,7 +213,7 @@ export default function ChatPage() {
   const textSub   = dm ? "text-gray-400" : "text-slate-400"
 
   return (
-    <div className={`flex h-screen w-full font-sans overflow-hidden relative transition-colors duration-300 ${dm ? "bg-gray-950" : "bg-[#fdfcff]"}`}>
+    <div className={`flex h-screen w-full font-sans overflow-hidden relative transition-colors duration-300 pt-16 ${dm ? "bg-gray-950" : "bg-[#fdfcff]"}`}>
       <div className="absolute inset-0 pointer-events-none z-0">
         <div className="absolute top-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full bg-[#fbcfe8]/40 blur-[120px]" />
         <div className="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] rounded-full bg-[#ddd6fe]/50 blur-[130px]" />
