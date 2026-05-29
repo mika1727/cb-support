@@ -1,4 +1,4 @@
-﻿const router = require("express").Router();
+const router = require("express").Router();
 const Groq = require("groq-sdk");
 const { getDB } = require("../db/database");
 
@@ -49,24 +49,6 @@ function parseRetryMessage(errMessage) {
   return null
 }
 
-async function askGemini(prompt, parts) {
-  const contents = parts
-    ? [{ parts }]
-    : [{ parts: [{ text: prompt }] }]
-
-  const response = await fetch(
-    `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${process.env.GEMINI_API_KEY}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ contents }),
-    }
-  )
-  const data = await response.json()
-  if (!response.ok) throw new Error(JSON.stringify(data))
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "Нет ответа."
-}
-
 router.post("/", async (req, res) => {
   try {
     const {
@@ -87,32 +69,47 @@ router.post("/", async (req, res) => {
     let reply
 
     if (imageBase64) {
-      // Анализ изображения через Gemini
       try {
-        const parts = []
-        parts.push({ inline_data: { mime_type: imageMimeType || "image/png", data: imageBase64 } })
-        parts.push({ text: `${SYSTEM}\n\nПользователь: ${message || "Посмотри на это изображение и помоги разобраться с проблемой."}` })
-        reply = await askGemini(null, parts)
-      } catch (geminiErr) {
-        console.error("[gemini image]", geminiErr.message)
-        const rateLimitMsg = parseRetryMessage(geminiErr.message)
-        reply = rateLimitMsg || "⚠️ Не удалось проанализировать изображение. Попробуйте описать проблему текстом."
+        const msg = await groq.chat.completions.create({
+          model: "llama-3.2-11b-vision-preview",
+          messages: [
+            {
+              role: "user",
+              content: [
+                { type: "image_url", image_url: { url: `data:${imageMimeType || "image/png"};base64,${imageBase64}` } },
+                { type: "text", text: `${SYSTEM}\n\nПользователь: ${message || "Посмотри на это изображение и помоги разобраться с проблемой."}` }
+              ]
+            }
+          ],
+          max_tokens: 1024,
+        })
+        reply = msg.choices[0].message.content
+      } catch (err) {
+        console.error("[groq image]", err.message)
+        reply = "⚠️ Не удалось проанализировать изображение. Попробуйте описать проблему текстом."
       }
     } else {
-     // Текстовый диалог через Groq
-      const msg = await groq.chat.completions.create({
-        model: "llama-3.3-70b-versatile",
-        messages: [
-          { role: "system", content: SYSTEM + (kbContext ? `\n\nБаза знаний:\n${kbContext}` : "") },
-          ...history,
-          { role: "user", content: message },
-        ],
-        max_tokens: 1024,
-      });
-      reply = msg.choices[0].message.content;
+      try {
+        const msg = await groq.chat.completions.create({
+          model: "llama-3.3-70b-versatile",
+          messages: [
+            { role: "system", content: SYSTEM + (kbContext ? `\n\nБаза знаний:\n${kbContext}` : "") },
+            ...history,
+            { role: "user", content: message },
+          ],
+          max_tokens: 1024,
+        })
+        reply = msg.choices[0].message.content
+      } catch (err) {
+        console.error("[groq text]", err.message)
+        const rateLimitMsg = parseRetryMessage(err.message)
+        if (rateLimitMsg) {
+          return res.json({ reply: rateLimitMsg, options: [], sessionId, suggestEscalate: false })
+        }
+        throw err
+      }
     }
 
-    // Парсим варианты ответа
     const lines = reply.split("\n").map(l => l.trim()).filter(Boolean)
     const optionLines = lines.filter(l => /^(\d+[.)]\s+|-\s+).{2,50}$/.test(l))
     const options = optionLines.map(l => l.replace(/^(\d+[.)]\s*|-\s*)/, "").trim()).slice(0, 4)
