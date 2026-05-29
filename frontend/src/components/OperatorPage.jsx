@@ -8,7 +8,7 @@ import {
 } from "lucide-react"
 import { useApp } from "../App"
 
-const API = "http://localhost:3001/api"
+const API = "https://cb-support-d6jb.onrender.com/api"
 
 const NAV_LINKS = [
   { label: "Главная", to: "/" },
