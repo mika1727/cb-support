@@ -386,7 +386,7 @@ export default function ChatPage() {
             </button>
           </header>
 
-          <div className="flex-1 overflow-y-auto px-6 py-6 scroll-smooth scrollbar-hide">
+          <div className="flex-1 overflow-y-auto px-6 py-6 scroll-smooth scrollbar-hide flex flex-col justify-center">
             <div className="max-w-2xl mx-auto flex flex-col gap-6">
               {messages.length === 0 && (
                 <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="flex gap-4 items-end mt-4">
