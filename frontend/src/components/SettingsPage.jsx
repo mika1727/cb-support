@@ -9,7 +9,7 @@ import {
 import { useApp } from "../App"
 
 const SESSIONS_KEY = "cb_sessions"
-const API = "http://localhost:3001/api"
+const API = "https://cb-support-d6jb.onrender.com/apii"
 
 const STATUS_MAP = {
   open:        { label: "Открыт",   cls: "bg-blue-50 text-blue-600 border-blue-200",         Icon: AlertCircle  },
