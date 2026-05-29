@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { GoogleLogin } from "@react-oauth/google"
+import { useGoogleLogin } from "@react-oauth/google"
 import { Sparkles, Shield, User, Eye, EyeOff, Mail, Lock, ArrowLeft, KeyRound } from "lucide-react"
 import { useApp } from "../App"
 
@@ -28,7 +28,41 @@ export default function LoginPage({ onLogin }) {
   const [googlePasswordConfirm, setGooglePasswordConfirm] = useState("")
   const [googleToken, setGoogleToken] = useState(null)
   const [googleUserData, setGoogleUserData] = useState(null)
-
+  const googleLogin = useGoogleLogin({
+  onSuccess: async (tokenResponse) => {
+    setLoading(true)
+    try {
+      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
+      })
+      const info = await res.json()
+      const authRes = await fetch(`${API}/auth/google`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ googleId: info.sub, name: info.name, email: info.email, avatar: info.picture }),
+      })
+      const data = await authRes.json()
+      if (!authRes.ok) { setError(data.error); return }
+      if (role === "operator") {
+        setPendingUser({ ...data.user, token: data.token })
+        setStep("operator-code")
+      } else if (data.isNewUser) {
+        setGoogleToken(data.token)
+        setGoogleUserData(data.user)
+        setStep("set-google-password")
+      } else {
+        localStorage.setItem("cb_token", data.token)
+        localStorage.setItem("cb_user", JSON.stringify(data.user))
+        onLogin(data.user)
+        navigate("/")
+      }
+    } catch { setError("Ошибка Google входа") }
+    finally { setLoading(false) }
+  },
+  onError: () => setError("Ошибка Google входа"),
+  flow: "implicit"
+})
+  
   const setF = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError("") }
 
   const dm = darkMode
@@ -288,9 +322,12 @@ export default function LoginPage({ onLogin }) {
                 <div className={`flex-1 h-px ${dm ? "bg-gray-700" : "bg-slate-200"}`} />
               </div>
               <div className="flex justify-center">
-                <GoogleLogin onSuccess={handleGoogleSuccess} onError={() => setError("Ошибка Google входа")}
-                  theme="outline" size="large" shape="rectangular" locale="ru" />
-              </div>
+  <button onClick={() => googleLogin()}
+    className={`w-full flex items-center justify-center gap-3 py-3 rounded-2xl border-2 font-medium text-sm transition-all hover:border-brand-300 ${dm ? "border-gray-600 text-white hover:bg-gray-700" : "border-slate-200 text-slate-700 hover:bg-slate-50"}`}>
+    <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
+    Войти через Google
+  </button>
+</div>
             </motion.div>
           )}
 
