@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { motion, AnimatePresence } from "framer-motion"
-import { useGoogleLogin } from "@react-oauth/google"
 import { Sparkles, Shield, User, Eye, EyeOff, Mail, Lock, ArrowLeft, KeyRound } from "lucide-react"
 import { useApp } from "../App"
 
@@ -23,47 +22,7 @@ export default function LoginPage({ onLogin }) {
   const [confirmNewCode, setConfirmNewCode] = useState("")
   const [forgotEmail, setForgotEmail] = useState("")
   const [forgotSent, setForgotSent] = useState(false)
-  // Для установки пароля Google-пользователем
-  const [googlePassword, setGooglePassword] = useState("")
-  const [googlePasswordConfirm, setGooglePasswordConfirm] = useState("")
-  const [googleToken, setGoogleToken] = useState(null)
-  const [googleUserData, setGoogleUserData] = useState(null)
-  const googleLogin = useGoogleLogin({
-  onSuccess: async (tokenResponse) => {
-    if (!tokenResponse.access_token) { setError("Ошибка Google входа"); return }
-    setLoading(true)
-    try {
-      const res = await fetch("https://www.googleapis.com/oauth2/v3/userinfo", {
-        headers: { Authorization: `Bearer ${tokenResponse.access_token}` }
-      })
-      const info = await res.json()
-      const authRes = await fetch(`${API}/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ googleId: info.sub, name: info.name, email: info.email, avatar: info.picture }),
-      })
-      const data = await authRes.json()
-      if (!authRes.ok) { setError(data.error); return }
-      if (role === "operator") {
-        setPendingUser({ ...data.user, token: data.token })
-        setStep("operator-code")
-      } else if (data.isNewUser) {
-        setGoogleToken(data.token)
-        setGoogleUserData(data.user)
-        setStep("set-google-password")
-      } else {
-        localStorage.setItem("cb_token", data.token)
-        localStorage.setItem("cb_user", JSON.stringify(data.user))
-        onLogin(data.user)
-        navigate("/")
-      }
-    } catch { setError("Ошибка Google входа") }
-    finally { setLoading(false) }
-  },
-  onError: () => setError("Ошибка Google входа"),
-  flow: "implicit"
-})
-  
+
   const setF = (k, v) => { setForm(p => ({ ...p, [k]: v })); setError("") }
 
   const dm = darkMode
@@ -71,39 +30,6 @@ export default function LoginPage({ onLogin }) {
   const inputCls = `w-full border rounded-2xl pl-10 pr-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-brand-300 ${dm ? "bg-gray-700 border-gray-600 text-white placeholder:text-gray-400" : "border-slate-200"}`
   const textMain = dm ? "text-white" : "text-dark-900"
   const textSub  = dm ? "text-gray-400" : "text-slate-400"
-
-  const handleGoogleSuccess = async (credentialResponse) => {
-    const base64 = credentialResponse.credential.split(".")[1]
-    const info = JSON.parse(atob(base64))
-    setLoading(true)
-    try {
-      const res = await fetch(`${API}/auth/google`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ googleId: info.sub, name: info.name, email: info.email, avatar: info.picture }),
-      })
-      const data = await res.json()
-      if (!res.ok) { setError(data.error); return }
-
-      if (role === "operator") {
-        setPendingUser({ ...data.user, token: data.token })
-        setStep("operator-code")
-      } else {
-        // Новый Google-пользователь — предлагаем установить пароль
-        if (data.isNewUser) {
-          setGoogleToken(data.token)
-          setGoogleUserData(data.user)
-          setStep("set-google-password")
-        } else {
-          localStorage.setItem("cb_token", data.token)
-          localStorage.setItem("cb_user", JSON.stringify(data.user))
-          onLogin(data.user)
-          navigate("/")
-        }
-      }
-    } catch { setError("Ошибка соединения") }
-    finally { setLoading(false) }
-  }
 
   const handleEmailAuth = async () => {
     setError("")
@@ -180,34 +106,6 @@ export default function LoginPage({ onLogin }) {
       navigate("/operator-panel")
     } catch { setError("Ошибка соединения") }
     finally { setLoading(false) }
-  }
-
-  // Установка пароля для нового Google-пользователя
-  const saveGooglePassword = async () => {
-    if (!googlePassword || googlePassword.length < 6) { setError("Пароль минимум 6 символов"); return }
-    if (googlePassword !== googlePasswordConfirm) { setError("Пароли не совпадают"); return }
-    setLoading(true)
-    try {
-      const res = await fetch(`${API}/auth/set-password`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ token: googleToken, password: googlePassword, confirmPassword: googlePasswordConfirm }),
-      })
-      const data = await res.json()
-      if (!res.ok) { setError(data.error); return }
-      localStorage.setItem("cb_token", googleToken)
-      localStorage.setItem("cb_user", JSON.stringify(googleUserData))
-      onLogin(googleUserData)
-      navigate("/")
-    } catch { setError("Ошибка соединения") }
-    finally { setLoading(false) }
-  }
-
-  const skipGooglePassword = () => {
-    localStorage.setItem("cb_token", googleToken)
-    localStorage.setItem("cb_user", JSON.stringify(googleUserData))
-    onLogin(googleUserData)
-    navigate("/")
   }
 
   return (
@@ -313,67 +211,10 @@ export default function LoginPage({ onLogin }) {
                 {loading ? "Загрузка..." : authMode === "login" ? "Войти" : "Создать аккаунт"}
               </button>
               {role === "user" && authMode === "login" && (
-                <button onClick={() => setStep("forgot-password")} className={`w-full text-xs transition-colors mb-4 text-center ${dm ? "text-gray-400 hover:text-brand-400" : "text-slate-400 hover:text-brand-600"}`}>
+                <button onClick={() => setStep("forgot-password")} className={`w-full text-xs transition-colors text-center ${dm ? "text-gray-400 hover:text-brand-400" : "text-slate-400 hover:text-brand-600"}`}>
                   Забыли пароль? Отправить запрос администратору
                 </button>
               )}
-              <div className="flex items-center gap-3 mb-4">
-                <div className={`flex-1 h-px ${dm ? "bg-gray-700" : "bg-slate-200"}`} />
-                <span className={`text-xs ${textSub}`}>или</span>
-                <div className={`flex-1 h-px ${dm ? "bg-gray-700" : "bg-slate-200"}`} />
-              </div>
-              <div className="flex justify-center">
-  <button onClick={() => googleLogin()}
-    className={`w-full flex items-center justify-center gap-3 py-3 rounded-2xl border-2 font-medium text-sm transition-all hover:border-brand-300 ${dm ? "border-gray-600 text-white hover:bg-gray-700" : "border-slate-200 text-slate-700 hover:bg-slate-50"}`}>
-    <img src="https://www.google.com/favicon.ico" alt="Google" className="w-5 h-5" />
-    Войти через Google
-  </button>
-</div>
-            </motion.div>
-          )}
-
-          {/* Установка пароля для нового Google-пользователя */}
-          {step === "set-google-password" && (
-            <motion.div key="set-google-password" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} className={cardCls}>
-              <div className="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 mx-auto mb-4">
-                <KeyRound size={24} />
-              </div>
-              <h2 className={`font-display font-bold text-xl mb-2 text-center ${textMain}`}>Добавить пароль?</h2>
-              <p className={`text-sm text-center mb-2 ${textSub}`}>
-                Вы вошли через Google. Можно дополнительно установить пароль, чтобы входить и по email.
-              </p>
-              <div className={`rounded-2xl px-4 py-3 mb-6 text-xs text-center ${dm ? "bg-gray-700 text-gray-300" : "bg-brand-50 text-brand-700"}`}>
-                👤 {googleUserData?.name} · {googleUserData?.email}
-              </div>
-              <div className="space-y-4 mb-6">
-                <div className="relative">
-                  <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input type={showPass ? "text" : "password"} value={googlePassword}
-                    onChange={e => { setGooglePassword(e.target.value); setError("") }}
-                    placeholder="Придумайте пароль (мин. 6 символов)"
-                    className={`${inputCls} pr-12`} />
-                  <button onClick={() => setShowPass(v => !v)} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400">
-                    {showPass ? <EyeOff size={16} /> : <Eye size={16} />}
-                  </button>
-                </div>
-                <div className="relative">
-                  <Lock size={16} className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
-                  <input type={showPass ? "text" : "password"} value={googlePasswordConfirm}
-                    onChange={e => { setGooglePasswordConfirm(e.target.value); setError("") }}
-                    onKeyDown={e => e.key === "Enter" && saveGooglePassword()}
-                    placeholder="Повторите пароль"
-                    className={inputCls} />
-                </div>
-              </div>
-              {error && <p className="text-red-500 text-xs mb-4 text-center">{error}</p>}
-              <button onClick={saveGooglePassword} disabled={loading}
-                className="w-full py-3 rounded-2xl bg-brand-500 text-white font-semibold hover:bg-brand-600 transition-colors disabled:opacity-50 mb-3">
-                {loading ? "Сохранение..." : "Установить пароль и войти"}
-              </button>
-              <button onClick={skipGooglePassword}
-                className={`w-full py-3 rounded-2xl border text-sm font-medium transition-colors ${dm ? "border-gray-700 text-gray-300 hover:bg-gray-700" : "border-slate-200 text-slate-600 hover:bg-slate-50"}`}>
-                Пропустить — войти без пароля
-              </button>
             </motion.div>
           )}
 
