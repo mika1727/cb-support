@@ -15,7 +15,7 @@ import LoginPage from "./components/LoginPage"
 import MyRequestsPage from "./components/MyRequestsPage"
 
 const GOOGLE_CLIENT_ID = "160623704521-9hqffab08sii634t2v6me6i8ubrdkk24.apps.googleusercontent.com"
-const API = "http://localhost:3001/api"
+const API = "https://cb-support-d6jb.onrender.com/api"
 
 // ── Контекст темы и языка ─────────────────────────────────────────────────────
 export const AppContext = createContext({
